@@ -1,0 +1,27 @@
+package com.cg.feign;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import com.cg.dto.DoctorDTO;
+
+public class DoctorFallback implements DoctorFeign{
+
+
+	@Override
+	public List<DoctorDTO> getAllDoctors() {
+		// TODO Auto-generated method stub
+		return Stream.of(
+                new DoctorDTO(1, "Shubham", "PHD"),
+                new DoctorDTO(2, "Ayush", "MBBS")
+        ).collect(Collectors.toList());
+	}
+
+
+
+	@Override
+	public DoctorDTO getDoctorById(int did) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	}

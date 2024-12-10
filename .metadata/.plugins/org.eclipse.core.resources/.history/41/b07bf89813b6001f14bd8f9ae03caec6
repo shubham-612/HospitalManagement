@@ -1,0 +1,68 @@
+package com.cg.dto;
+
+import com.cg.entity.Doctor;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class DoctorDTO {
+	
+	@Getter
+	@Setter
+    private int did;
+	
+	@Getter
+	@Setter
+    private String name;
+	
+	@Getter
+	@Setter
+    private String qualification;
+    
+    
+//    public int getDid() {
+//		return did;
+//	}
+//	public void setDid(int did) {
+//		this.did = did;
+//	}
+//	public String getName() {
+//		return name;
+//	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+//	public String getQualification() {
+//		return qualification;
+//	}
+//	public void setQualification(String qualification) {
+//		this.qualification = qualification;
+//	}
+	public static DoctorDTO fromEntity(Doctor d) { // product ->  bucket glass -> productdto
+		//bucket se glass me dala (to convert product entity to DTO object)
+		return new DoctorDTO(d.getDid(),d.getName(),d.getQualification());
+	}
+	public Doctor toEntity() {
+		//from dto to product object
+		return new Doctor(this.did,this.name,this.qualification);
+	}
+//	public DoctorDTO(int did, String name, String qualification) {
+//		super();
+//		this.did = did;
+//		this.name = name;
+//		this.qualification = qualification;
+//	}
+//	public DoctorDTO() {
+//		super();
+//	}
+	
+}
+

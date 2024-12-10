@@ -1,0 +1,68 @@
+package com.cg.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cg.entity.Doctor;
+import com.cg.feign.AuthFeign;
+import com.cg.repository.DoctorRepository;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.transaction.Transactional;
+
+@Service
+public class DoctorService implements IDoctorService{
+    
+	@Autowired
+	DoctorRepository doctorrepo;
+	
+	@Override
+	public List<Doctor> findAllDoctors() {
+		// TODO Auto-generated method stub
+		return doctorrepo.findAll();
+	}
+
+	@Override
+	public Optional<Doctor> findDoctorById(int id) {
+		// TODO Auto-generated method stub
+		return doctorrepo.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public Doctor createDoctor(Doctor doctor) {
+		// TODO Auto-generated method stub
+		return doctorrepo.save(doctor);
+	}
+
+	@Override
+	public void deleteDoctor(int id) {
+		// TODO Auto-generated method stub
+		doctorrepo.deleteById(id);
+		
+	}
+
+	@Override
+	public Doctor updateDoctor(int id, Doctor doctor) {
+		// TODO Auto-generated method stub
+		Optional<Doctor> doc = findDoctorById(id);
+		Doctor d =doc.get();
+		d.setDid(doctor.getDid());
+		d.setName(doctor.getName());
+		d.setQualification(doctor.getQualification());
+		return doctorrepo.save(doctor);
+	}
+
+	@Autowired(required=true)
+	AuthFeign af;
+	
+	@Override
+	public boolean hasPermission(String token) {
+		boolean flag = af.getTokenValidity(token);
+		System.out.println("Flag Token : " + flag);
+		return flag;
+	}
+}

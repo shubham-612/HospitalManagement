@@ -1,0 +1,27 @@
+spring.application.name=APPOINTMENT-SERVICE
+server.port=0
+#logging.level.root=DEBUG
+# Database configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+ 
+## Hibernate Properties
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+# app.name = NoPatientFound
+
+# EUREKA CLIENT SETTING
+eureka.client.serviceUrl.defaultZone = http://localhost:8761/eureka
+eureka.client.register-with-eureka= true
+
+# Expose Actuator Endpoints
+management.endpoints.web.exposure.include=info,health
+ 
+# Optionally set the base path for Actuator endpoints (default is "/actuator")
+management.endpoints.web.base-path=/actuator
+
+#circuit breaker
+spring.cloud.openfeign.circuitbreaker.enabled=true

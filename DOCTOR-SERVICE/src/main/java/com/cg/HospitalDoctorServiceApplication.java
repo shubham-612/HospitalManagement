@@ -1,0 +1,20 @@
+package com.cg;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
+public class HospitalDoctorServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HospitalDoctorServiceApplication.class, args);
+	}
+
+}
+
+//http://lin-5cg0523bjj.corp.capgemini.com:9001/doctor/getall
+//http://lin-5cg0523bjj.corp.capgemini.com:8013/doctor/getall

@@ -1,0 +1,12 @@
+1732851205110	Rename type 'Product'
+1732851601139	Rename type 'ProductDTO'
+1732851759181	Rename type 'ProductRepository'
+1732851818989	Rename type 'IProductService'
+1732851829386	Rename type 'ProductImpl'
+1732851979129	Rename type 'DoctorDTO'
+1732851990375	Rename type 'Doctor'
+1732852002932	Rename type 'DoctorService'
+1732852016150	Rename type 'IDoctorService'
+1732852076156	Rename type 'DoctorRepository'
+1732852954759	Rename type 'ProductController'
+1732879761746	Delete element

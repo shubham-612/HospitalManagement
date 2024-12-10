@@ -1,0 +1,111 @@
+package com.cg.controller;
+ 
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.cg.dto.PatientDTO;
+import com.cg.entity.Patient;
+import com.cg.exception.ResourceNotFound;
+import com.cg.service.IPatientService;
+ 
+@RequestMapping("/patient")
+@RestController
+public class PatientController {
+	
+	@Autowired
+	IPatientService patientservice;
+	
+	private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
+	 
+	// FIND ALL PATIENTS
+	@GetMapping("/getall")
+    public List<Patient> getAllPatients() {
+        return patientservice.findAllPatients();                
+    }
+	
+	
+	// FIND PATIENT BY ID WITH EXCEPTION 
+	
+	@Value("${app.name}")
+	private String appName;
+	
+	@GetMapping("/{pid}")
+    public PatientDTO getPatientById(@PathVariable int pid) throws ResourceNotFound {
+        return patientservice.findPatientBypid(pid)
+                .map(PatientDTO::fromEntity)
+                .orElseThrow(() -> {
+                    // Using appName in the exception message
+                    return new ResourceNotFound("[" + appName + "] - Patient not found for this id :: " + pid);
+                });
+    
+	// FIND PATIENT BY ID USING LOGGING 
+	@GetMapping("/logging/{pid}")
+	public PatientDTO getPatientsById(@PathVariable int pid) throws ResourceNotFound {
+	    logger.info("Received request to get patient with ID: {}", pid);  // Log request entry
+	    
+	    return patientservice.findPatientBypid(pid)
+	            .map(patient -> {
+	                logger.info("Patient found with ID: {}", pid);  // Log when patient is found
+	                return PatientDTO.fromEntity(patient);
+	            })
+	            .orElseThrow(() -> {
+	                logger.error("Patient not found for this id :: {}", pid);  // Log error when patient is not found
+	                return new ResourceNotFound("Patient not found for this id :: " + pid);
+	            });
+	}
+
+	
+	// CREATE PRATIENT
+	@PostMapping("/create")
+	public Patient CreateProduct( @RequestBody Patient patient) {
+        return patientservice.createPatient(patient); 
+	}
+	
+	// DELETE PATIENTS
+	@DeleteMapping("/delete/{id}")
+	public void DeletePatient(@PathVariable int pid) {
+		 patientservice.deletePatient(pid);
+	}
+	
+	// UPDATE PATIENTS
+	@PutMapping("/update")
+	public Patient updatePatient(@RequestBody Patient p1) throws ResourceNotFound{
+		int id = p1.getPid();
+		return patientservice.updatePatient(id, p1);
+	}
+
+	// FIND PATIENT BY NAME
+	@GetMapping("/name/{name}")
+    public Optional<Patient> getPatientByName(@PathVariable("name") String pname) {
+        return patientservice.getPatientByName(pname);
+    }
+	
+//	 FIND PRODUCT BY ID WITH ERROR MESSAGE
+//	@Value("${app.name}")
+//	private String appName;
+//	@GetMapping(path = "/patient/{id}")
+//    public String getPatientById(@PathVariable int pid) {
+//        Optional<Patient> product = patientservice.findPatientBypid(pid);
+//
+//        if (product.isPresent()) {
+//            return product.get().toString();  
+//        } else {
+//            System.out.println(appName);
+//            return appName;
+//        }
+//    }
+//	
+	
+}

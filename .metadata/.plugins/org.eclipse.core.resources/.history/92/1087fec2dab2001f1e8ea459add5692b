@@ -1,0 +1,11 @@
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+  instances:
+    doctorService:
+      baseConfig: default
+      slidingWindowSize: 10

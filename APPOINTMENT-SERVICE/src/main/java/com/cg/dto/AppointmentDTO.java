@@ -1,0 +1,99 @@
+package com.cg.dto;
+
+import java.util.Date;
+
+public class AppointmentDTO {
+	
+	private int aid;
+	private String time;
+	private Date date;
+	private String issue;
+	private String status;
+	private int fees;
+	private DoctorDTO doctor;
+	private PatientDTO patient;
+	
+	public AppointmentDTO(int aid, String time, Date date, String issue,
+			String status, int fees, DoctorDTO doctor, PatientDTO patient) {
+		super();
+		this.aid = aid;
+		this.time = time;
+		this.date = date;
+		this.issue = issue;
+		this.status = status;
+		this.fees = fees;
+		this.doctor = doctor;
+		this.patient=patient;
+	}
+	
+	public PatientDTO getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientDTO patient) {
+		this.patient = patient;
+	}
+
+	public int getAid() {
+		return aid;
+	}
+	public void setAid(int aid) {
+		this.aid = aid;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String getIssue() {
+		return issue;
+	}
+	public void setIssue(String issue) {
+		this.issue = issue;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public int getFees() {
+		return fees;
+	}
+	public void setFees(int fees) {
+		this.fees = fees;
+	}
+	public DoctorDTO getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(DoctorDTO doctor) {
+		this.doctor = doctor;
+	}
+	@Override
+	public String toString() {
+		return "AppointmentDTO [aid=" + aid + ", time=" + time + ", date=" + date + ", issue=" + issue + ", status="
+				+ status + ", fees=" + fees + ", doctor=" + doctor + " , patient=" + patient + "]";
+	}
+	public AppointmentDTO() {
+		super();
+	} 
+	
+	
+//	//to convert product entity to dto object
+//	public static AppointmentDTO fromEntity(Appointment appointment) {
+//		return new AppointmentDTO(appointment.getAid(), appointment.getPid(), 
+//				appointment.getDid(), appointment.getTime(), appointment.getDate(), 
+//				appointment.getIssue(), appointment.getStatus(), appointment.getFees());
+//	}
+//	//to convert from dto object to product entity
+//	public  Appointment toEntity() {
+//		return new Appointment(this.aid, this.pid, this.did, this.time, this.date, this.issue, this.status, this.fees);
+//	}
+}

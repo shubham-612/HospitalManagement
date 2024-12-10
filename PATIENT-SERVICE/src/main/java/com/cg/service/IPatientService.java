@@ -1,0 +1,15 @@
+package com.cg.service;
+ 
+import java.util.List;
+import java.util.Optional;
+import com.cg.entity.Patient;
+ 
+public interface IPatientService {
+	List<Patient> findAllPatients() ;
+	public Optional<Patient> findPatientBypid(int pid);
+	public Patient createPatient(Patient pat);
+	public void deletePatient(int pid);
+	public Patient updatePatient(int pid,Patient pat);
+	public Optional<Patient> getPatientByName(String pname);
+   
+}

@@ -1,0 +1,66 @@
+package com.cg.controller;
+ 
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.cg.dto.AppointmentDTO;
+import com.cg.entity.Appointment;
+import com.cg.exception.ResourceNotFound;
+import com.cg.service.IAppointmentService;
+ 
+@RequestMapping("/appointment")
+@RestController
+public class AppointmentController {
+	
+	@Autowired
+	IAppointmentService as;
+	
+	// FIND ALL APPOINTMNET
+	@GetMapping("/getall")    public List<Appointment> getAllAppointments() {
+        return as.findAllAppointments();                
+    }
+	
+	// FIND APPOINTMENT BY ID WITH EXCEPTION 
+	@GetMapping("/{aid}")
+	Optional<Appointment>findByAppointmentIdFromDBWithException(@PathVariable int aid) throws ResourceNotFound
+	{	
+		Optional<Appointment> appointment = as.findAppointmentByaid(aid);
+    	appointment.orElseThrow(() -> new ResourceNotFound("Appointment not found for this id :: " + aid));
+    	System.out.println(aid);
+    	return appointment;	
+	}
+	
+	// CREATE APPOINTMENT
+	@PostMapping("/create")
+	public Appointment createAppointment( @RequestBody Appointment appointment) {
+        return as.createAppointment(appointment);
+	}
+	
+	// DELETE APPOINTMENT
+	@DeleteMapping("/delete/{id}")
+	public void DeleteAppointment(@PathVariable int aid) {
+		 as.deleteAppointment(aid);
+	}
+	
+	// UPDATE APPOINTMENT
+	@PutMapping("/update")
+		public Appointment updateAppointment(@RequestBody Appointment app) throws ResourceNotFound{
+		int aid = app.getAid();
+		return as.updateAppointment(aid, app);
+	}
+	
+	// CALL DOCTOR DETAILS BY APPOINTMENT ID
+	@GetMapping("/byid/{aid}")
+	public AppointmentDTO getappAppointmentwithdoctor(@PathVariable int aid)
+	{
+		return as.getAppointmentwithDoctorandPatientByaid(aid);
+	}
+}

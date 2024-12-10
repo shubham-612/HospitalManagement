@@ -1,0 +1,20 @@
+package com.cg.feign;
+
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.cg.dto.DoctorDTO;
+import feign.Headers;
+
+@Headers("Content-Type: application/json")
+@FeignClient(name = "DOCTOR-SERVICE", url = "${DOCTOR-SERVICE:http://localhost:9001}")
+public interface DoctorFeign {
+
+	@GetMapping("/doctor/{did}")
+	DoctorDTO getDoctorById(@PathVariable int did);
+
+	@GetMapping("/doctor/getall")
+	List<DoctorDTO> getAllDoctors();
+}

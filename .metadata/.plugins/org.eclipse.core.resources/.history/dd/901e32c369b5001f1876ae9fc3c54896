@@ -1,0 +1,104 @@
+package com.cg.test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.util.Arrays;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.cg.controller.PatientController;
+import com.cg.entity.Patient;
+import com.cg.service.IPatientService;
+
+@ExtendWith(MockitoExtension.class)
+
+public class PatientControllerTest {
+
+	@Mock
+	private IPatientService patientservice;
+
+	@InjectMocks
+
+	private PatientController patientController;
+	private Patient patient;
+
+	@BeforeEach
+    void setUp() {
+        patient = new Patient(1, "Yasho", 8271, "MBBS");
+    }
+
+	   @Test
+	    void testGetAllPatients() {
+	        when(patientservice.findAllPatients()).thenReturn(Arrays.asList(patient));
+	        var patients = patientservice.findAllPatients();
+	        assertFalse(patients.isEmpty());
+	        assertEquals(1, patients.size());
+	        assertEquals("Yasho", patients.get(0).getPname());
+	    }
+
+	   @Test
+	    void testGetByDoctorId() {
+	        when(patientservice.findPatientBypid(1)).thenReturn(Optional.of(patient));
+	        var result = patientservice.findPatientBypid(1);
+	        assertTrue(result.isPresent());
+	        assertEquals("Yasho", result.get().getPname());
+	    }
+ 
+//	   @Test
+//
+//	    void testCreateMyDoctor() {
+//
+//	        when(patientservice.createPatient(patient)).thenReturn(patient);
+//
+//	        Patient createdPa = doctorController.createMyDoctor(doctor);
+//
+//	        assertNotNull(createdDoctor);
+//
+//	        assertEquals("Yasho", createdDoctor.getDname());
+//
+//	    }
+//
+//	   @Test
+//
+//	   void testDeleteMyDoctor() {
+//
+//	       // Mocking the deleteDoctor method to return true
+//
+//	       when(doctorService.deleteDoctor(1)).thenReturn(true);
+//
+//	       // Call the controller method
+//
+//	       doctorController.deleteMyDoctor(1);
+//
+//	       // Verify that deleteDoctor was called exactly once with ID 1
+//
+//	       verify(doctorService, times(1)).deleteDoctor(1);
+//
+//	   }
+//
+//	   @Test
+//
+//	    void testUpdateMyProduct()  {
+//
+//	        when(doctorService.updateDoctor(doctor)).thenReturn(doctor);
+//
+//	        Doctor updatedDoctor = doctorController.updateMyDoctor(doctor);
+//
+//	        assertNotNull(updatedDoctor);
+//
+//	        assertEquals("Yasho", updatedDoctor.getDname());
+//
+//	    }
+
+}

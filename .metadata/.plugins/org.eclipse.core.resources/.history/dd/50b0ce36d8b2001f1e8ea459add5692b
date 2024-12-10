@@ -1,0 +1,33 @@
+package com.cg.service;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cg.entity.Doctor;
+import com.cg.repository.DoctorRepository;
+
+import java.util.List;
+
+@Service
+public class DoctorFallbackService {
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    // Circuit Breaker is applied here. If the database query fails, fallback is used
+    @CircuitBreaker(name = "doctorCircuitBreaker", fallbackMethod = "fallbackDoctorDetails")
+    public List<Doctor> getAllDoctors() {
+        // Try to fetch doctors from the database (happy path)
+        return doctorRepository.findAll();
+    }
+
+    // Fallback method in case the service/database fails
+    public List<Doctor> fallbackDoctorDetails(Throwable throwable) {
+        // Return a predefined list of doctors when the circuit breaker is triggered
+        return List.of(
+            new Doctor(1, "Fallback Dr. Mike", "MBBS"),
+            new Doctor(2, "Fallback Dr. Eva", "MD"),
+            new Doctor(3, "Fallback Dr. John", "PhD")
+        );
+    }
+}

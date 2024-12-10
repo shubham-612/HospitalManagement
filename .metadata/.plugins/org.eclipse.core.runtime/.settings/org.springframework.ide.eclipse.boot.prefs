@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.actuator=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.cloud-eureka=3
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.cloud-feign=4
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.cloud-resilience4j=3
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.data-jpa=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.lombok=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.spring-ai-openai=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.validation=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.zipkin=1
+org.springframework.ide.eclipse.boot.wizard.initializr.url=https\://start.spring.io\n

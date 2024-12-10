@@ -1,0 +1,14 @@
+package com.cg.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.cg.entity.Patient;
+
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Integer>{
+
+//	public List<Patient> findAllBypname(String pname);//as it is interact with db, this list would be here
+//	findByname== name is property of product
+//	@Query("select count(*) from Patient where pname=:pname")
+//	public int getCountBypname(String pname);
+}

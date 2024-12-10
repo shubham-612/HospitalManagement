@@ -1,0 +1,26 @@
+spring.application.name=DOCTOR-SERVICE
+server.port = 9001
+#logging.level.root=DEBUG
+
+# Database configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+ 
+## Hibernate Properties
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+# EUREKA CLIENT SETTING
+eureka.client.serviceUrl.defaultZone = http://localhost:8761/eureka
+eureka.client.register-with-eureka= true
+
+# Expose Actuator Endpoints
+management.endpoints.web.exposure.include=info,health
+management.endpoints.web.base-path=/actuator
+
+#zipkin property
+spring.zipkin.baseUrl=http://localhost:9411
+spring.sleuth.enabled=true
+management.tracing.sampling.probability=1.0

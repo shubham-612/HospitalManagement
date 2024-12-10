@@ -1,0 +1,35 @@
+package com.cg.service;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Arrays;
+
+@Service
+public class DoctorFallbackService {
+
+    // Simulating a method that retrieves doctors, which can fail
+    @CircuitBreaker(name = "doctorCircuitBreaker", fallbackMethod = "fallbackDoctorDetails")
+    public List<Doctor> getAllDoctors() {
+        // Simulate a failure condition (e.g., service down)
+        if (Math.random() > 0.5) {
+            throw new RuntimeException("External service failed");
+        }
+
+        // In a real scenario, this would fetch data from a database or external service
+        return Arrays.asList(
+                new Doctor(1, "Dr. Smith", "MD"),
+                new Doctor(2, "Dr. John", "MBBS"),
+                new Doctor(3, "Dr. Alice", "MD, PhD")
+        );
+    }
+
+    // Fallback method that will be triggered in case of failure
+    public List<Doctor> fallbackDoctorDetails(Throwable throwable) {
+        return Arrays.asList(
+                new Doctor(1, "Fallback Dr. Mike", "MBBS"),
+                new Doctor(2, "Fallback Dr. Eva", "MD")
+        );
+    }
+}
+

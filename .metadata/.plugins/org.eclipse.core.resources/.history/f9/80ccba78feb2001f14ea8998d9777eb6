@@ -1,0 +1,24 @@
+package com.cg.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.cg.entity.Patient;
+
+
+
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Integer>{
+
+//	public List<Patient> findAllBypname(String pname);//as it is interact with db, this list would be here
+//	findByname== name is property of product
+
+	
+	
+	@Query("SELECT p FROM Patient p WHERE p.pname = :name")
+    List<Patient> findByName(@Param("name") String name);
+	
+}

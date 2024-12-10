@@ -1,0 +1,7 @@
+resilience4j.circuitbreaker:
+  instances:
+    doctorCircuitBreaker:
+      registerHealthIndicator: true
+      failureRateThreshold: 50  # Threshold for failure rate (percentage)
+      waitDurationInOpenState: 10000ms  # Time to stay open before trying again
+      
